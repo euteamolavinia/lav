@@ -16,12 +16,31 @@ usei funções do claude e do gemini/gemini notebook pra construir os migrations
 - Maven
 - Postman
 
-### oq funciona
+### oq funciona e consultas interessantes só pra eu lembrar
 - cadastro e consulta de clientes
 - abertura e consulta de contas bancárias
 - depósitos com atualização de saldo
 - registro e consulta do histórico de movimentações
 - validações e tratamento de erros
+
+POST	/api/v1/customers	cadastrar cliente
+
+GET	/api/v1/customers/{id}	consultar cliente
+
+GET	/api/v1/customers	listar clientes
+
+POST	/api/v1/accounts	abrir conta
+
+GET	/api/v1/accounts/{accountNumber}	consultar conta por número
+
+GET	/api/v1/accounts/id/{id}	consultar uma conta pelo seu uid (vou tirar na próxima versão e adotar um método melhor pra encontrar quem está por trás do número de conta)
+
+GET	/api/v1/accounts/customer/{customerId}	listar todas as contas de um cliente
+
+POST	/api/v1/accounts/{accountNumber}/deposits	fazer um depósito
+
+GET	/api/v1/accounts/{accountNumber}/transactions?page=0&size=10	Consultar histórico paginado
+
 
 
 **projeto em desenvolvimento.**
