@@ -10,3 +10,7 @@ application-local.properties
 backend.zip
 **/target/
 
+
+# Maven build output
+**/target/
+
