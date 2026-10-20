@@ -1,4 +1,3 @@
-
 package br.com.lav.account;
 
 import jakarta.validation.Valid;
@@ -22,5 +21,14 @@ public class DepositController {
 
         return ResponseEntity.ok(
                 service.deposit(accountNumber, request));
+    }
+
+    @PostMapping("/{accountNumber}/withdrawals")
+    public ResponseEntity<AccountTransactionResponse> withdraw(
+            @PathVariable String accountNumber,
+            @Valid @RequestBody DepositRequest request) {
+
+        return ResponseEntity.ok(
+                service.withdraw(accountNumber, request));
     }
 }
