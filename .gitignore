@@ -1,0 +1,12 @@
+target/
+**/target/
+.env
+.env.*
+!.env.example
+application-local.properties
+*.log
+.idea/
+
+backend.zip
+**/target/
+
