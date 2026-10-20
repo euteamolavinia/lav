@@ -1,4 +1,3 @@
-
 package br.com.lav.account;
 
 import br.com.lav.customer.Customer;
@@ -58,6 +57,14 @@ public class BankAccount {
 
     public void deposit(BigDecimal amount) {
         this.balance = this.balance.add(amount);
+    }
+
+    public void withdraw(BigDecimal amount) {
+        if (amount.compareTo(balance) > 0) {
+            throw new IllegalArgumentException("Saldo insuficiente");
+        }
+
+        this.balance = this.balance.subtract(amount);
     }
 
     public UUID getId() {
