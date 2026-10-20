@@ -9,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/api/v1/accounts")
 public class TransactionHistoryController {
@@ -22,9 +20,9 @@ public class TransactionHistoryController {
         this.service = service;
     }
 
-    @GetMapping("/{id}/transactions")
+    @GetMapping("/{accountNumber}/transactions")
     public Page<AccountTransactionResponse> getTransactions(
-            @PathVariable UUID id,
+            @PathVariable String accountNumber,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
 
@@ -37,9 +35,11 @@ public class TransactionHistoryController {
         Pageable pageable = PageRequest.of(
                 page,
                 size,
-                Sort.by(Sort.Direction.DESC, "createdAt")
+                Sort.by(
+                        Sort.Order.desc("createdAt"),
+                        Sort.Order.desc("id"))
         );
 
-        return service.getTransactions(id, pageable);
+        return service.getTransactions(accountNumber, pageable);
     }
 }

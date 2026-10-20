@@ -26,11 +26,11 @@ public class AccountTransactionService {
 
     @Transactional
     public AccountTransactionResponse deposit(
-            UUID accountId,
+            String accountNumber,
             DepositRequest request) {
 
         BankAccount account = accountRepository
-                .findByIdForUpdate(accountId)
+                .findByAccountNumberForUpdate(accountNumber)
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "Conta bancária não encontrada"));
@@ -76,17 +76,22 @@ public class AccountTransactionService {
 
     @Transactional(readOnly = true)
     public Page<AccountTransactionResponse> getTransactions(
-            UUID accountId,
+            String accountNumber,
             Pageable pageable) {
 
-        if (!accountRepository.existsById(accountId)) {
+        if (!accountRepository.existsByAccountNumber(accountNumber)) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND,
                     "Conta bancária não encontrada");
         }
 
         return transactionRepository
-                .findAllByAccount_Id(accountId, pageable)
+                .findAllByAccount_Id(
+                        accountRepository
+                                .findByAccountNumber(accountNumber)
+                                .orElseThrow()
+                                .getId(),
+                        pageable)
                 .map(AccountTransactionResponse::from);
     }
 }

@@ -16,9 +16,16 @@ public interface BankAccountRepository
 
     boolean existsByAccountNumber(String accountNumber);
 
+    Optional<BankAccount> findByAccountNumber(String accountNumber);
+
     List<BankAccount> findAllByCustomer_Id(UUID customerId);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT a FROM BankAccount a WHERE a.id = :id")
     Optional<BankAccount> findByIdForUpdate(@Param("id") UUID id);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT a FROM BankAccount a WHERE a.accountNumber = :accountNumber")
+    Optional<BankAccount> findByAccountNumberForUpdate(
+            @Param("accountNumber") String accountNumber);
 }

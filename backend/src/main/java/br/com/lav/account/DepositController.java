@@ -5,8 +5,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/api/v1/accounts")
 public class DepositController {
@@ -17,12 +15,12 @@ public class DepositController {
         this.service = service;
     }
 
-    @PostMapping("/{id}/deposits")
+    @PostMapping("/{accountNumber}/deposits")
     public ResponseEntity<AccountTransactionResponse> deposit(
-            @PathVariable UUID id,
+            @PathVariable String accountNumber,
             @Valid @RequestBody DepositRequest request) {
 
         return ResponseEntity.ok(
-                service.deposit(id, request));
+                service.deposit(accountNumber, request));
     }
 }

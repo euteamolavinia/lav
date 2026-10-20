@@ -26,11 +26,18 @@ public class BankAccountController {
         BankAccountResponse response = service.open(request);
 
         return ResponseEntity
-            .created(URI.create("/api/v1/accounts/" + response.id()))
-            .body(response);
+                .created(URI.create(
+                        "/api/v1/accounts/" + response.accountNumber()))
+                .body(response);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{accountNumber}")
+    public BankAccountResponse findByAccountNumber(
+            @PathVariable String accountNumber) {
+        return service.findByAccountNumber(accountNumber);
+    }
+
+    @GetMapping("/id/{id}")
     public BankAccountResponse findById(@PathVariable UUID id) {
         return service.findById(id);
     }
